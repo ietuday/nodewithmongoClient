@@ -429,7 +429,7 @@ exports.insertDocument = async (collname, insObj, callback) => {
                             }
                         }
                         console.log("Inserted a document into the " + collname + " collection.", result, err);
-                        callback(err, result);
+                        callback(err, result.ops);
                         //client.close
                     });
             })
