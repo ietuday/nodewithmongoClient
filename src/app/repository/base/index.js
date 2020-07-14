@@ -1,17 +1,17 @@
 const MongoClient = require('mongodb').MongoClient
-        , assert = require('assert');
+    , assert = require('assert');
 // const {listDatabases}  = require('../../../../listdb');
 const url = process.env.DB_URL;
 const dbName = process.env.DB_NAME;
-const client = 
-new MongoClient(
-    url, 
-    {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-    });
+const client =
+    new MongoClient(
+        url,
+        {
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
+        });
 
-exports.insertDocuments =  async (collName, insObject, callback) =>{
+exports.insertDocuments = async (collName, insObject, callback) => {
     try {
         // Connect to the MongoDB cluster
         await client.connect()
@@ -19,17 +19,18 @@ exports.insertDocuments =  async (collName, insObject, callback) =>{
                 // assert.equal(null, err);
                 console.log("Connected successfully to server");
                 const db = client.db(dbName);
-                db.collection(collName).insertMany(insObject,  (err, result) =>{
-                    if (err) {
-                        console.log(err);
-                        if (JSON.stringify(err).indexOf('timed out') === -1) {
-                            assert.equal(err, null);
+                db.collection(collName)
+                    .insertMany(insObject, (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
                         }
-                    }
-                    console.log("Inserted a document into the " + collName + " collection.", result, err);
-                    callback(err, result);
-                    //client.close
-                });
+                        console.log("Inserted a document into the " + collName + " collection.", result, err);
+                        callback(err, result);
+                        //client.close
+                    });
             })
             .catch((err) => {
                 console.log("Not Able to connect");
@@ -43,7 +44,7 @@ exports.insertDocuments =  async (collName, insObject, callback) =>{
     }
 };
 
-exports.findDocument =  async (collname, query, callback) =>{
+exports.findDocument = async (collname, query, callback) => {
     try {
         // Connect to the MongoDB cluster
         await client.connect()
@@ -52,217 +53,18 @@ exports.findDocument =  async (collname, query, callback) =>{
                 console.log("Connected successfully to server");
                 const db = client.db(dbName);
                 db.collection(collname)
-                .find(query).toArray( (err, result) =>{
-                if (err) {
-                    console.log(err)
-                    if (JSON.stringify(err).indexOf('timed out') === -1) {
-                        assert.equal(err, null);
-                    }
-                }
-                console.log("$$$$$$$$$$",result);
-                
-                callback(err,result);
-                //client.close
-              });
-            })
-            .catch((err) => {
-                console.log("Not Able to connect");
-                console.log(err);
-                // assert.equal(err, err);
-            })
-    } catch (e) {
-        console.error(e);
-    } finally {
-        console.log("Close Called");
-    }
-};
-
-exports.findOneDocument =  async (collname, query, callback) =>{
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect()
-            .then((err) => {
-                // assert.equal(null, err);
-                console.log("Connected successfully to server");
-                const db = client.db(dbName);
-                db.collection(collname)
-                .findOne(query, (err, result) =>{
-                if (err) {
-                    console.log(err)
-                    if (JSON.stringify(err).indexOf('timed out') === -1) {
-                        assert.equal(err, null);
-                    }
-                }
-                console.log("$$$$$$$$$$",result);
-                
-                callback(err,result);
-                //client.close
-              });
-            })
-            .catch((err) => {
-                console.log("Not Able to connect");
-                console.log(err);
-                // assert.equal(err, err);
-            })
-    } catch (e) {
-        console.error(e);
-    } finally {
-        console.log("Close Called");
-    }
-};
-
-
-exports.findDocumentFields =  async (collname, query, fields, callback) =>{
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect()
-            .then((err) => {
-                // assert.equal(null, err);
-                console.log("Connected successfully to server");
-                const db = client.db(dbName);
-                db.collection(collname)
-                .find(query, fields).toArray( (err, result) =>{
-                if (err) {
-                    console.log(err);
-                    if (JSON.stringify(err).indexOf('timed out') === -1) {
-                        assert.equal(err, null);
-                    }
-                }
-                callback(result);
-                //client.close
-             });
-            })
-            .catch((err) => {
-                console.log("Not Able to connect");
-                console.log(err);
-                // assert.equal(err, err);
-            })
-    } catch (e) {
-        console.error(e);
-    } finally {
-        console.log("Close Called");
-    }
-};
-
-
-
-exports.findDocumentFieldsLimit =  async (collname, query, fields, limit, callback) =>{
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect()
-            .then((err) => {
-                // assert.equal(null, err);
-                console.log("Connected successfully to server");
-                const db = client.db(dbName);
-                db.collection(collname)
-                .find(query, fields).limit(limit).toArray( (err, result) =>{
-                if (err) {
-                    console.log(err);
-                    if (JSON.stringify(err).indexOf('timed out') === -1) {
-                        assert.equal(err, null);
-                    }
-                }
-                callback(result);
-                //client.close
-             });
-            })
-            .catch((err) => {
-                console.log("Not Able to connect");
-                console.log(err);
-                // assert.equal(err, err);
-            })
-    } catch (e) {
-        console.error(e);
-    } finally {
-        console.log("Close Called");
-    }
-};
-
-
-exports.findDocumentFieldsLimitReverse =  async (collname, query, fields, limit, callback) =>{
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect()
-            .then((err) => {
-                // assert.equal(null, err);
-                console.log("Connected successfully to server");
-                const db = client.db(dbName);
-                db.collection(collname)
-                .find(query, fields).sort({$natural: -1}).limit(limit).toArray( (err, result) => {
-                if (err) {
-                    console.log(err);
-                    if (JSON.stringify(err).indexOf('timed out') === -1) {
-                        assert.equal(err, null);
-                    }
-                }
-                callback(result);
-                //client.close
-              })
-            })
-            .catch((err) => {
-                console.log("Not Able to connect");
-                console.log(err);
-                // assert.equal(err, err);
-            })
-    } catch (e) {
-        console.error(e);
-    } finally {
-        console.log("Close Called");
-    }
-};
-
-exports.findDocumentSort =  async (collname, query, sort, direction, callback) =>{
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect()
-            .then((err) => {
-                // assert.equal(null, err);
-                console.log("Connected successfully to server");
-                const db = client.db(dbName);
-                db.collection(collname)
-                .find(query).sort(sort).toArray( (err, result) =>{
-                if (err) {
-                    console.log(err);
-                    if (JSON.stringify(err).indexOf('timed out') === -1) {
-                        //  assert.equal(err, null);
-                    }
-                }
-                callback(err, result);
-                //client.close
-             });
-            })
-            .catch((err) => {
-                console.log("Not Able to connect");
-                console.log(err);
-                // assert.equal(err, err);
-            })
-    } catch (e) {
-        console.error(e);
-    } finally {
-        console.log("Close Called");
-    }
-};
-
-exports.updateArrayDocumentPull =  async (collname, query, pullObj, callback) =>{
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect()
-            .then((err) => {
-                // assert.equal(null, err);
-                console.log("Connected successfully to server");
-                const db = client.db(dbName);
-                db.collection(collname)
-                .update(query, {$pull: pullObj}, {"$upsert": true},  (err, result) =>{
-                    if (err) {
-                        console.log(err);
-                        if (JSON.stringify(err).indexOf('timed out') === -1) {
-                            assert.equal(err, null);
+                    .find(query).toArray((err, result) => {
+                        if (err) {
+                            console.log(err)
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
                         }
-                    }
-                    console.log(" Inserted object into Array", result, err);
-                    callback(err, result);
-                    //client.close
-                });
+                        console.log("$$$$$$$$$$", result);
+
+                        callback(err, result);
+                        //client.close
+                    });
             })
             .catch((err) => {
                 console.log("Not Able to connect");
@@ -276,7 +78,7 @@ exports.updateArrayDocumentPull =  async (collname, query, pullObj, callback) =>
     }
 };
 
-exports.updateArrayDocument =  async (collname, query, pushObj, callback) =>{
+exports.findOneDocument = async (collname, query, callback) => {
     try {
         // Connect to the MongoDB cluster
         await client.connect()
@@ -285,17 +87,18 @@ exports.updateArrayDocument =  async (collname, query, pushObj, callback) =>{
                 console.log("Connected successfully to server");
                 const db = client.db(dbName);
                 db.collection(collname)
-                .update(query, {$push: pushObj}, {"$upsert": true},  (err, result) =>{
-                    if (err) {
-                        console.log(err);
-                        if (JSON.stringify(err).indexOf('timed out') === -1) {
-                            assert.equal(err, null);
+                    .findOne(query, (err, result) => {
+                        if (err) {
+                            console.log(err)
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
                         }
-                    }
-                    console.log(" Inserted object into Array", result, err);
-                    callback(err, result);
-                    //client.close
-                });
+                        console.log("$$$$$$$$$$", result);
+
+                        callback(err, result);
+                        //client.close
+                    });
             })
             .catch((err) => {
                 console.log("Not Able to connect");
@@ -310,8 +113,7 @@ exports.updateArrayDocument =  async (collname, query, pushObj, callback) =>{
 };
 
 
-
-exports.updateOldArrayDocument =  async (collname, query, updateObject, callback) =>{
+exports.findDocumentFields = async (collname, query, fields, callback) => {
     try {
         // Connect to the MongoDB cluster
         await client.connect()
@@ -320,17 +122,16 @@ exports.updateOldArrayDocument =  async (collname, query, updateObject, callback
                 console.log("Connected successfully to server");
                 const db = client.db(dbName);
                 db.collection(collname)
-                .updateMany(query, {$set: updateObject},  (err, result) =>{
-                    if (err) {
-                        console.log(err);
-                        if (JSON.stringify(err).indexOf('timed out') === -1) {
-                            assert.equal(err, null);
+                    .find(query, fields).toArray((err, result) => {
+                        if (err) {
+                            console.log(err);
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
                         }
-                    }
-                    // console.log(" Updated object into Array", result, err);
-                    callback(err, result);
-                    //client.close
-                });
+                        callback(result);
+                        //client.close
+                    });
             })
             .catch((err) => {
                 console.log("Not Able to connect");
@@ -345,7 +146,8 @@ exports.updateOldArrayDocument =  async (collname, query, updateObject, callback
 };
 
 
-exports.updateOldArrayDocument1 =  async (collname, query, updateObject, callback) =>{
+
+exports.findDocumentFieldsLimit = async (collname, query, fields, limit, callback) => {
     try {
         // Connect to the MongoDB cluster
         await client.connect()
@@ -354,17 +156,16 @@ exports.updateOldArrayDocument1 =  async (collname, query, updateObject, callbac
                 console.log("Connected successfully to server");
                 const db = client.db(dbName);
                 db.collection(collname)
-                .updateOne(query, {$set: updateObject},  (err, result) =>{
-                    if (err) {
-                        console.log(err);
-                        if (JSON.stringify(err).indexOf('timed out') === -1) {
-                            assert.equal(err, null);
+                    .find(query, fields).limit(limit).toArray((err, result) => {
+                        if (err) {
+                            console.log(err);
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
                         }
-                    }
-                    console.log(" Updated object into Array", result, err);
-                    callback(query, err, result);
-                    //client.close
-                });
+                        callback(result);
+                        //client.close
+                    });
             })
             .catch((err) => {
                 console.log("Not Able to connect");
@@ -378,7 +179,8 @@ exports.updateOldArrayDocument1 =  async (collname, query, updateObject, callbac
     }
 };
 
-exports.updateOldArrayDocument1 =  async (collname, query, updateObject, callback) =>{
+
+exports.findDocumentFieldsLimitReverse = async (collname, query, fields, limit, callback) => {
     try {
         // Connect to the MongoDB cluster
         await client.connect()
@@ -387,7 +189,173 @@ exports.updateOldArrayDocument1 =  async (collname, query, updateObject, callbac
                 console.log("Connected successfully to server");
                 const db = client.db(dbName);
                 db.collection(collname)
-                    .updateOne(query, {$set: updateObject},  (err, result) =>{
+                    .find(query, fields).sort({ $natural: -1 }).limit(limit).toArray((err, result) => {
+                        if (err) {
+                            console.log(err);
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
+                        }
+                        callback(result);
+                        //client.close
+                    })
+            })
+            .catch((err) => {
+                console.log("Not Able to connect");
+                console.log(err);
+                // assert.equal(err, err);
+            })
+    } catch (e) {
+        console.error(e);
+    } finally {
+        console.log("Close Called");
+    }
+};
+
+exports.findDocumentSort = async (collname, query, sort, direction, callback) => {
+    try {
+        // Connect to the MongoDB cluster
+        await client.connect()
+            .then((err) => {
+                // assert.equal(null, err);
+                console.log("Connected successfully to server");
+                const db = client.db(dbName);
+                db.collection(collname)
+                    .find(query).sort(sort).toArray((err, result) => {
+                        if (err) {
+                            console.log(err);
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                //  assert.equal(err, null);
+                            }
+                        }
+                        callback(err, result);
+                        //client.close
+                    });
+            })
+            .catch((err) => {
+                console.log("Not Able to connect");
+                console.log(err);
+                // assert.equal(err, err);
+            })
+    } catch (e) {
+        console.error(e);
+    } finally {
+        console.log("Close Called");
+    }
+};
+
+exports.updateArrayDocumentPull = async (collname, query, pullObj, callback) => {
+    try {
+        // Connect to the MongoDB cluster
+        await client.connect()
+            .then((err) => {
+                // assert.equal(null, err);
+                console.log("Connected successfully to server");
+                const db = client.db(dbName);
+                db.collection(collname)
+                    .update(query, { $pull: pullObj }, { "$upsert": true }, (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
+                        }
+                        console.log(" Inserted object into Array", result, err);
+                        callback(err, result);
+                        //client.close
+                    });
+            })
+            .catch((err) => {
+                console.log("Not Able to connect");
+                console.log(err);
+                // assert.equal(err, err);
+            })
+    } catch (e) {
+        console.error(e);
+    } finally {
+        console.log("Close Called");
+    }
+};
+
+exports.updateArrayDocument = async (collname, query, pushObj, callback) => {
+    try {
+        // Connect to the MongoDB cluster
+        await client.connect()
+            .then((err) => {
+                // assert.equal(null, err);
+                console.log("Connected successfully to server");
+                const db = client.db(dbName);
+                db.collection(collname)
+                    .update(query, { $push: pushObj }, { "$upsert": true }, (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
+                        }
+                        console.log(" Inserted object into Array", result, err);
+                        callback(err, result);
+                        //client.close
+                    });
+            })
+            .catch((err) => {
+                console.log("Not Able to connect");
+                console.log(err);
+                // assert.equal(err, err);
+            })
+    } catch (e) {
+        console.error(e);
+    } finally {
+        console.log("Close Called");
+    }
+};
+
+
+
+exports.updateOldArrayDocument = async (collname, query, updateObject, callback) => {
+    try {
+        // Connect to the MongoDB cluster
+        await client.connect()
+            .then((err) => {
+                // assert.equal(null, err);
+                console.log("Connected successfully to server");
+                const db = client.db(dbName);
+                db.collection(collname)
+                    .updateMany(query, { $set: updateObject }, (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
+                        }
+                        // console.log(" Updated object into Array", result, err);
+                        callback(err, result);
+                        //client.close
+                    });
+            })
+            .catch((err) => {
+                console.log("Not Able to connect");
+                console.log(err);
+                // assert.equal(err, err);
+            })
+    } catch (e) {
+        console.error(e);
+    } finally {
+        console.log("Close Called");
+    }
+};
+
+
+exports.updateOldArrayDocument1 = async (collname, query, updateObject, callback) => {
+    try {
+        // Connect to the MongoDB cluster
+        await client.connect()
+            .then((err) => {
+                // assert.equal(null, err);
+                console.log("Connected successfully to server");
+                const db = client.db(dbName);
+                db.collection(collname)
+                    .updateOne(query, { $set: updateObject }, (err, result) => {
                         if (err) {
                             console.log(err);
                             if (JSON.stringify(err).indexOf('timed out') === -1) {
@@ -397,7 +365,7 @@ exports.updateOldArrayDocument1 =  async (collname, query, updateObject, callbac
                         console.log(" Updated object into Array", result, err);
                         callback(query, err, result);
                         //client.close
-                });
+                    });
             })
             .catch((err) => {
                 console.log("Not Able to connect");
@@ -411,7 +379,7 @@ exports.updateOldArrayDocument1 =  async (collname, query, updateObject, callbac
     }
 };
 
-exports.insertDocument =  async (collname, insObj, callback) =>{
+exports.updateOldArrayDocument1 = async (collname, query, updateObject, callback) => {
     try {
         // Connect to the MongoDB cluster
         await client.connect()
@@ -420,17 +388,17 @@ exports.insertDocument =  async (collname, insObj, callback) =>{
                 console.log("Connected successfully to server");
                 const db = client.db(dbName);
                 db.collection(collname)
-                .insertOne(insObj,  (err, result) =>{
-                    if (err) {
-                        console.log(err);
-                        if (JSON.stringify(err).indexOf('timed out') === -1) {
-                            assert.equal(err, null);
+                    .updateOne(query, { $set: updateObject }, (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
                         }
-                    }
-                    console.log("Inserted a document into the " + collname + " collection.", result, err);
-                    callback(err, result);
-                    //client.close
-                });
+                        console.log(" Updated object into Array", result, err);
+                        callback(query, err, result);
+                        //client.close
+                    });
             })
             .catch((err) => {
                 console.log("Not Able to connect");
@@ -444,8 +412,7 @@ exports.insertDocument =  async (collname, insObj, callback) =>{
     }
 };
 
-
-exports.updateDocumentUpsert =  async (collname, query, setValues, callback) =>{
+exports.insertDocument = async (collname, insObj, callback) => {
     try {
         // Connect to the MongoDB cluster
         await client.connect()
@@ -454,17 +421,17 @@ exports.updateDocumentUpsert =  async (collname, query, setValues, callback) =>{
                 console.log("Connected successfully to server");
                 const db = client.db(dbName);
                 db.collection(collname)
-                .updateOne(query, {$set: setValues}, {"$upsert": true},  (err, result) =>{
-                    if (err) {
-                        console.log(err);
-                        if (JSON.stringify(err).indexOf('timed out') === -1) {
-                            assert.equal(err, null);
+                    .insertOne(insObj, (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
                         }
-                    }
-                    console.log("Updated a document into the " + collname + " collection.", result, err);
-                    callback(result, query, setValues);
-                    //client.close
-                });
+                        console.log("Inserted a document into the " + collname + " collection.", result, err);
+                        callback(err, result);
+                        //client.close
+                    });
             })
             .catch((err) => {
                 console.log("Not Able to connect");
@@ -479,7 +446,7 @@ exports.updateDocumentUpsert =  async (collname, query, setValues, callback) =>{
 };
 
 
-exports.deleteDocument =  async (collname, obj, callback) =>{
+exports.updateDocumentUpsert = async (collname, query, setValues, callback) => {
     try {
         // Connect to the MongoDB cluster
         await client.connect()
@@ -487,16 +454,51 @@ exports.deleteDocument =  async (collname, obj, callback) =>{
                 // assert.equal(null, err);
                 console.log("Connected successfully to server");
                 const db = client.db(dbName);
-                db.collection(collname).deleteOne(obj,  (err, result) =>{
-                    console.log(err);
+                db.collection(collname)
+                    .updateOne(query, { $set: setValues }, { "$upsert": true }, (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            if (JSON.stringify(err).indexOf('timed out') === -1) {
+                                assert.equal(err, null);
+                            }
+                        }
+                        console.log("Updated a document into the " + collname + " collection.", result, err);
+                        callback(result, query, setValues);
+                        //client.close
+                    });
+            })
+            .catch((err) => {
+                console.log("Not Able to connect");
+                console.log(err);
+                // assert.equal(err, err);
+            })
+    } catch (e) {
+        console.error(e);
+    } finally {
+        console.log("Close Called");
+    }
+};
+
+
+exports.deleteDocument = async (collname, obj, callback) => {
+    try {
+        // Connect to the MongoDB cluster
+        await client.connect()
+            .then((err) => {
+                // assert.equal(null, err);
+                console.log("Connected successfully to server");
+                const db = client.db(dbName);
+                db.collection(collname)
+                    .deleteOne(obj, (err, result) => {
+                        console.log(err);
                         if (err) {
                             if (JSON.stringify(err).indexOf('timed out') === -1) {
                                 assert.equal(err, null);
                             }
                         }
-                    callback(err, result);
-                    //client.close()
-                });
+                        callback(err, result);
+                        //client.close()
+                    });
             })
             .catch((err) => {
                 console.log("Not Able to connect");

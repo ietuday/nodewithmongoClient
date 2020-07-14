@@ -22,26 +22,19 @@ module.exports = {
         });
     },
 
-    // getStudentById: function (request, response) {
-    //     const { id } = request.params;
-    //     studentBusiness.getStudentById(id, (err, res) => {
-    //         err ? response.send(err) : response.send(res)
-    //     });
-    // },
+    updateCompanyById: function (request, response) {
+        const { id } = request.params;
+        const company = request.body;
+        companyBusiness.updateCompanyById(id, company, (err, res) => {
+            err ? response.send(err) : response.send(res)
+        });
+    },
 
-    // updateStudentById: function (request, response) {
-    //     const { id } = request.params;
-    //     const student = request.body;
-    //     studentBusiness.updateStudentById(id, student, (err, res) => {
-    //         err ? response.send(err) : response.send(res)
-    //     });
-    // },
-
-    // deleteStudentById: function (request, response) {
-    //     const { id } = request.params;
-    //     studentBusiness.deleteStudentById(id, (err, res) => {
-    //         err ? response.send(err) : response.send(res)
-    //     });
-    // }
+    deleteCompanyById: function (request, response) {
+        const { id } = request.params;
+        companyBusiness.deleteCompanyById(id, (err, res) => {
+            err ? response.send(err) : response.send(res)
+        });
+    }
 
 }

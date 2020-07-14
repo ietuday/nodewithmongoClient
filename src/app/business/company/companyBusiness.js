@@ -20,22 +20,16 @@ module.exports = {
         });
     },
 
-    // getStudentById: function (id, callback) {
-    //     studentRepository.getStudentById(id, (err, res) => {
-    //         err ? callback(err, null) : callback(null, res)
-    //     });
-    // },
+    updateCompanyById: function (id, company, callback) {
+        companyRepository.updateCompanyById(id, company, (err, res) => {
+            err ? callback(err, null) : callback(null, res)
+        });
+    },
 
-    // updateStudentById: function (id, student, callback) {
-    //     studentRepository.updateStudentById(id, student, (err, res) => {
-    //         err ? callback(err, null) : callback(null, res)
-    //     });
-    // },
-
-    // deleteStudentById: function (id, callback) {
-    //     studentRepository.deleteStudentById(id, (err, res) => {
-    //         err ? callback(err, null) : callback(null, res)
-    //     });
-    // }
+    deleteCompanyById: function (id, callback) {
+        companyRepository.deleteCompanyById(id, (err, res) => {
+            err ? callback(err, null) : callback(null, res)
+        });
+    }
 
 }
