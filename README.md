@@ -26,3 +26,4 @@ Pré Requisites: <br />
 
 Run:
 <br><code> > npm install </code>
+<br><code> > nodemon server.js </code>
