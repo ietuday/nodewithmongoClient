@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient
         , assert = require('assert');
-const {listDatabases}  = require('./listdb');
+// const {listDatabases}  = require('../../../../listdb');
 const url = "mongodb://localhost:27017";
 const dbName = 'eMarket';
 const client = 
@@ -59,7 +59,7 @@ exports.findDocument =  async (collname, query, callback) =>{
                         assert.equal(err, null);
                     }
                 }
-                callback(result);
+                callback(err,result);
                 db.close();
               });
             })

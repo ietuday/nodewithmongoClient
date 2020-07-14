@@ -1,22 +1,16 @@
+require('dotenv').config();
+const app = require('express')();
+const cors = require('cors');
 
-// const connection = require('./connection').main().catch(console.error);
-const mongo = require('./mongoQuery');
+app.use(cors());
+app.use(require('./src/config/middlewares/base'));
 
-const product = {
-    "name": "Test",
-    "Description": "Data11"
-}
-// mongo.insertDocument('products',product,(err, res) => {
-//         console.log("EEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRPOR",err);
-//         console.log("REEEEEEEEEEEEEEEEEEEEEEESSSSSSSSSSSSSSSSSS",res);
-        
-    
-// })
+const port = parseInt(process.env.PORT, 10) || 3000;
+app.set("port", port);
 
+// Db Connection
+// require('./src/app/dataAccess/dbHelper');
 
-
-
-
-
-
-
+app.listen(port, () => {
+    console.log("Node app is running at localhost:" + port);
+});
