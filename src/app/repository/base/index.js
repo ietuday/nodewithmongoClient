@@ -59,6 +59,42 @@ exports.findDocument =  async (collname, query, callback) =>{
                         assert.equal(err, null);
                     }
                 }
+                console.log("$$$$$$$$$$",result);
+                
+                callback(err,result);
+                //client.close
+              });
+            })
+            .catch((err) => {
+                console.log("Not Able to connect");
+                console.log(err);
+                // assert.equal(err, err);
+            })
+    } catch (e) {
+        console.error(e);
+    } finally {
+        console.log("Close Called");
+    }
+};
+
+exports.findOneDocument =  async (collname, query, callback) =>{
+    try {
+        // Connect to the MongoDB cluster
+        await client.connect()
+            .then((err) => {
+                // assert.equal(null, err);
+                console.log("Connected successfully to server");
+                const db = client.db(dbName);
+                db.collection(collname)
+                .findOne(query, (err, result) =>{
+                if (err) {
+                    console.log(err)
+                    if (JSON.stringify(err).indexOf('timed out') === -1) {
+                        assert.equal(err, null);
+                    }
+                }
+                console.log("$$$$$$$$$$",result);
+                
                 callback(err,result);
                 //client.close
               });

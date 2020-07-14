@@ -1,4 +1,6 @@
 const mongoQuery = require('../base/index');
+const ObjectId = require('mongodb').ObjectID;
+
 
 module.exports = {
 
@@ -15,7 +17,7 @@ module.exports = {
     },
 
     getCompanyById: function (id, callback) {
-        mongoQuery.findDocument('company',{ id:id }, (err, res) => {
+        mongoQuery.findOneDocument('company',{ _id:ObjectId(id) }, (err, res) => {
             err ? callback(err, null) : callback(null, res);
         })
     },
