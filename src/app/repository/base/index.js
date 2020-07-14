@@ -1,8 +1,8 @@
 const MongoClient = require('mongodb').MongoClient
         , assert = require('assert');
 // const {listDatabases}  = require('../../../../listdb');
-const url = "mongodb://localhost:27017";
-const dbName = 'eMarket';
+const url = process.env.DB_URL;
+const dbName = process.env.DB_NAME;
 const client = 
 new MongoClient(
     url, 
