@@ -28,7 +28,7 @@ exports.insertDocuments =  async (collName, insObject, callback) =>{
                     }
                     console.log("Inserted a document into the " + collName + " collection.", result, err);
                     callback(err, result);
-                    db.close();
+                    //client.close
                 });
             })
             .catch((err) => {
@@ -60,7 +60,7 @@ exports.findDocument =  async (collname, query, callback) =>{
                     }
                 }
                 callback(err,result);
-                db.close();
+                //client.close
               });
             })
             .catch((err) => {
@@ -93,7 +93,7 @@ exports.findDocumentFields =  async (collname, query, fields, callback) =>{
                     }
                 }
                 callback(result);
-                db.close();
+                //client.close
              });
             })
             .catch((err) => {
@@ -127,7 +127,7 @@ exports.findDocumentFieldsLimit =  async (collname, query, fields, limit, callba
                     }
                 }
                 callback(result);
-                db.close();
+                //client.close
              });
             })
             .catch((err) => {
@@ -160,7 +160,7 @@ exports.findDocumentFieldsLimitReverse =  async (collname, query, fields, limit,
                     }
                 }
                 callback(result);
-                db.close();
+                //client.close
               })
             })
             .catch((err) => {
@@ -192,7 +192,7 @@ exports.findDocumentSort =  async (collname, query, sort, direction, callback) =
                     }
                 }
                 callback(err, result);
-                db.close();
+                //client.close
              });
             })
             .catch((err) => {
@@ -225,7 +225,7 @@ exports.updateArrayDocumentPull =  async (collname, query, pullObj, callback) =>
                     }
                     console.log(" Inserted object into Array", result, err);
                     callback(err, result);
-                    db.close();
+                    //client.close
                 });
             })
             .catch((err) => {
@@ -258,7 +258,7 @@ exports.updateArrayDocument =  async (collname, query, pushObj, callback) =>{
                     }
                     console.log(" Inserted object into Array", result, err);
                     callback(err, result);
-                    db.close();
+                    //client.close
                 });
             })
             .catch((err) => {
@@ -293,7 +293,7 @@ exports.updateOldArrayDocument =  async (collname, query, updateObject, callback
                     }
                     // console.log(" Updated object into Array", result, err);
                     callback(err, result);
-                    db.close();
+                    //client.close
                 });
             })
             .catch((err) => {
@@ -327,7 +327,7 @@ exports.updateOldArrayDocument1 =  async (collname, query, updateObject, callbac
                     }
                     console.log(" Updated object into Array", result, err);
                     callback(query, err, result);
-                    db.close();
+                    //client.close
                 });
             })
             .catch((err) => {
@@ -360,7 +360,7 @@ exports.updateOldArrayDocument1 =  async (collname, query, updateObject, callbac
                         }
                         console.log(" Updated object into Array", result, err);
                         callback(query, err, result);
-                        client.close();
+                        //client.close
                 });
             })
             .catch((err) => {
@@ -393,7 +393,7 @@ exports.insertDocument =  async (collname, insObj, callback) =>{
                     }
                     console.log("Inserted a document into the " + collname + " collection.", result, err);
                     callback(err, result);
-                    client.close();
+                    //client.close
                 });
             })
             .catch((err) => {
@@ -427,7 +427,7 @@ exports.updateDocumentUpsert =  async (collname, query, setValues, callback) =>{
                     }
                     console.log("Updated a document into the " + collname + " collection.", result, err);
                     callback(result, query, setValues);
-                    client.close();
+                    //client.close
                 });
             })
             .catch((err) => {
@@ -459,7 +459,7 @@ exports.deleteDocument =  async (collname, obj, callback) =>{
                             }
                         }
                     callback(err, result);
-                    client.close();
+                    //client.close()
                 });
             })
             .catch((err) => {

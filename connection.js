@@ -42,6 +42,6 @@ const assert = require('assert');
         console.error(e);
     } finally {
         console.log("Close Called");
-        await client.close();
+        // await client.close();
     }
 }
