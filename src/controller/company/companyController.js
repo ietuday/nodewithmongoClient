@@ -20,7 +20,7 @@ module.exports = {
             ? 
             response.status(404).send(utility.generateResponse(404, err, false, null)) 
             : 
-            response.status(201).send(utility.generateResponse(200, 'all company', true, res))
+            response.status(200).send(utility.generateResponse(200, 'all company', true, res))
         });
     },
 
@@ -31,7 +31,7 @@ module.exports = {
             ? 
             response.status(404).send(utility.generateResponse(404, err, false, null)) 
             : 
-            response.status(201).send(utility.generateResponse(200, 'company', true, res))
+            response.status(200).send(utility.generateResponse(200, 'company', true, res))
         });
     },
 
@@ -43,7 +43,7 @@ module.exports = {
             ? 
             response.status(404).send(utility.generateResponse(404, err, false, null)) 
             : 
-            response.status(201).send(utility.generateResponse(200, 'company updated', true, res))
+            response.status(200).send(utility.generateResponse(200, 'company updated', true, res))
         });
     },
 
@@ -54,7 +54,7 @@ module.exports = {
             ? 
             response.status(404).send(utility.generateResponse(404, err, false, null)) 
             : 
-            response.status(201).send(utility.generateResponse(200, 'company deleted', true, res))
+            response.status(200).send(utility.generateResponse(200, 'company deleted', true, res))
         });
     }
 
