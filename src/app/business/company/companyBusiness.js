@@ -8,8 +8,8 @@ module.exports = {
         });
     },
 
-    getAllCompanies: function (callback) {
-        companyRepository.getAllCompanies((err, res) => {
+    getAllCompany: function (callback) {
+        companyRepository.getAllCompany((err, res) => {
             err ? callback(err, null) : callback(null, res)
         });
     },

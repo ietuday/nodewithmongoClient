@@ -10,7 +10,7 @@ module.exports = {
         })
     },
 
-    getAllCompanies: function (callback) {
+    getAllCompany: function (callback) {
         mongoQuery.findDocument('company', {}, (err, res) => {
             err ? callback(err, null) : callback(null, res)
         });

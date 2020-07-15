@@ -14,8 +14,8 @@ module.exports = {
         });
     },
 
-    getAllCompanies: function (request, response) {
-        companyBusiness.getAllCompanies((err, res) => {
+    getAllCompany: function (request, response) {
+        companyBusiness.getAllCompany((err, res) => {
             err 
             ? 
             response.status(404).send(utility.generateResponse(404, err, false, null)) 
